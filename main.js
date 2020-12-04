@@ -7,7 +7,8 @@ const port = process.env.PORT;
 server.get('/', async (req, res) => {
 	if(req.query && req.query.src) {
 		try {
-			const srcResponse = await axios.get(req.query.src);
+			const srcResponse = await axios.get(req.query.src, { responseType: 'arraybuffer' });
+			res.header('content-type', srcResponse.headers['content-type']);
 			res.send(srcResponse.data);
 		} catch(e) {
 			console.error(e);
